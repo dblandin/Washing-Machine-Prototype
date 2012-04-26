@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+
+<!-- Washer/Dryer Prototype
+	 by Devon Blandin, April 2012
+	 for CSC 360, Spring Quarter 2012      -->
+
+<head>
+	<meta charset="utf-8">
+	<title>Washer/Dryer Prototype</title>
+	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+	<script>window.jQuery || document.write('<script src="js/jquery-1.7.1.min.js"><\/script><script src="js/jquery-ui.min.js"><\/script><link href="css/jquery-ui.css" rel="stylesheet" type="text/css"/>')</script>
+	<script src="js/WasherDryerMachine.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/soundmanager2.js"></script>
+	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+	<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+	<section id="interface">
+		<ul id="power">
+			<li id="powerControl"></li>
+		</ul>
+		<div id="touchScreen">
+			<p id="cycleTimer"></p>
+			<ul id="cycleChoice">
+				<li id="cycleBack"></li>
+				<li id="cycleName"></li>
+				<li id="cycleForward"></li>
+			</ul>
+			<ul id="previewChoices">
+				<li id="washChoice"></li>
+				<li id="dryChoice"></li>
+			</ul>
+			<div id="cycleProgressBar"></div>
+		</div>
+		<ul id="cycleControls" class="controlSet">
+			<li id="cycleStart"></li>
+			<li id="cyclePause"></li>
+			<li id="cycleStop"></li>
+		</ul>
+		<ul id="setWaterLevel" class="controlSet">
+			<li id="waterLevelLow"></li>
+			<li id="waterLevelMedium"></li>
+			<li id="waterLevelHigh"></li>
+		</ul>
+		<ul id="setWaterTemp" class="controlSet">
+			<li id="waterTempCold"></li>
+			<li id="waterTempWarm"></li>
+			<li id="waterTempHot1"></li>
+			<li id="waterTempHot2"></li>
+			<li id="waterTempHot3"></li>
+			<li id="waterTempHot4"></li>
+		</ul>
+		<ul id="setWashTime" class="controlSet">
+			<li class="0">0</li>
+			<li class="15">15</li>
+			<li class="30">30</li>
+			<li class="45">45</li>
+			<li class="60">60</li>
+		</ul>
+		<ul id="setDryTemp" class="controlSet">
+			<li id="dryTempNoHeat"></li>
+			<li id="dryTempLow"></li>
+			<li id="dryTempMedium"></li>
+			<li id="dryTempHigh"></li>
+		</ul>
+		<ul id="setDryTime" class="controlSet">
+			<li class="0">0</li>
+			<li class="15">15</li>
+			<li class="30">30</li>
+			<li class="45">45</li>
+			<li class="60">60</li>
+		</ul>
+	</section>
+	<section id="testControls">
+		<p id="testInfo"></p>
+		<ul>
+			<li id="fastForward"></li>
+		</ul>
+	</section>
+<script>
+	soundManager.url = 'swf/';
+	soundManager.flashVersion = 9; // optional: shiny features (default = 8)
+	soundManager.useFlashBlock = true; // optionally, enable when you're ready to dive in
+	/*
+	 * read up on HTML5 audio support, if you're feeling adventurous.
+	 * iPad/iPhone and devices without flash installed will always attempt to use it.
+	*/
+	
+</script>
+
+</body>
+</html>

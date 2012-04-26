@@ -1,0 +1,275 @@
+/* Washer/Dryer Prototype
+   by Devon Blandin, April 2012
+   for CSC 360, Spring Quarter 2012 */
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* ----------- Styles ---------------- */
+
+body {
+	background-color:#F7F5FF;
+}
+
+section {
+	background-color: #F7F5FF;
+	position:relative;
+	margin:10px auto;
+	border:1px solid #000;
+	width: 900px;
+}
+section#testControls {
+	height:100px;
+}
+section#interface {
+	height: 500px;
+}
+#touchScreen {
+	width:600px;
+	height:300px;
+	border:1px solid #000;
+	position:relative;
+	margin:10px auto 0 auto;
+	background-color:#152737;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	border-radius: 20px;
+}
+#sm2movie{
+	bgcolor:#EEEFF7;
+	position:absolute;
+	right:-99999;
+}
+#testControls {
+	padding:10px;
+	color:#152737;
+}
+li.circle, li.square {
+	background-image:url('../img/laundrySymbols.png');
+	width: 30px;
+	height: 30px;
+	float:left;
+	margin:0 5px;
+	background-color:#F7F5FF;
+	-webkit-box-shadow: 0px 0px 2px 2px #000;
+	-moz-box-shadow: 0px 0px 2px 2px #000;
+	box-shadow: 0px 0px 2px 2px #000;
+	text-align:center;
+	line-height:30px;
+	font-size:20px;
+	font-weight:bold;
+}
+#dryTime li.circle, #washTime li.circle {
+	background-image:none;
+}
+li.circle {
+	-moz-border-radius: 50px;
+	-webkit-border-radius: 50px;
+	border-radius: 50px;
+}
+.circle:hover {
+	cursor:pointer;
+}
+#waterTempCold {
+	background-position: -30px -60px;
+}
+#waterTempWarm {
+	background-position: -90px -60px;
+}
+#waterTempHot1 {
+	background-position: -150px -60px;
+}
+#waterTempHot2 {
+	background-position: 0 -90px;
+}
+#waterTempHot3 {
+	background-position: -60px -90px;
+}
+#waterTempHot4 {
+	background-position: -120px -90px;
+}
+#dryTempNoHeat {
+	background-position: -150px 0;
+}
+#dryTempLow {
+	background-position: -90px 0;
+}
+#dryTempMedium {
+	background-position:  -120px 0;
+}
+#dryTempHigh {
+	background-position: 0 0;
+}
+#waterLevelLow {
+	background-position: 0 -210px;
+}
+#waterLevelMedium {
+	background-position: -30px -210px;
+}
+#waterLevelHigh {
+	background-position: -60px -210px;
+}
+#fastForward {
+	background-position: 0 -240px;
+}
+#powerControl {
+	background-position: -30px -240px;
+}
+#washChoice {
+	left:20px;
+	background-position: -30px -60px;
+}
+#dryChoice {
+	right:160px;
+	background-position: 0 0;
+}
+li.selected {
+	background-color:#799AA5;
+}
+.controlSet {
+	position:absolute;
+	padding:10px;
+}
+#dryChoice, #washChoice {
+	position:absolute;
+	bottom:70px;
+}
+#power {
+	position:absolute;
+	right:20px;
+	top:20px;
+}
+#setWaterTemp {
+	bottom:120px;
+}
+#setWaterLevel {
+	bottom:60px;
+}
+#setWashTime {
+	bottom:0;
+	left:0;
+}
+#setDryTemp {
+	bottom:120px;
+	right:0px;
+}
+#setDryTime {
+	bottom:60px;
+	right:0px;
+}
+#cycleControls {
+	width:150px;
+	position:relative;
+	margin:0 auto;
+}
+#cycleStart {
+	background-position: -90px -210px;
+}
+#cyclePause {
+	background-position: -120px -210px;
+}
+#cycleStop {
+	background-position: -150px -210px;
+}
+#cycleTimer {
+	position:relative;
+	text-align:center;
+	top:80px;
+	font-size:48px;
+}
+#touchScreen {
+	transition: background-color 2s;
+	-moz-transition: background-color 2s; /* Firefox 4 */
+	-webkit-transition: background-color 2s; /* Safari and Chrome */
+	-o-transition: background-color 2s; /* Opera */
+}
+#cycleChoice {
+	width:300px;
+	height:50px;
+	position:relative;
+	margin:0 auto;
+	top:80px;
+}
+#cycleChoice li {
+	float:none;
+	top:10px;
+}
+#testControls ul {
+	position:absolute;
+	top:20px;
+	right:20px;
+}
+#cycleBack {
+	position:absolute;
+	left:0;
+	background-position: -180px -210px;
+	-webkit-transform:rotate(180deg);
+    -moz-transform:rotate(180deg);
+    -ms-transform:rotate(180deg);
+    -o-transform:rotate(180deg);
+	transform:rotate(180deg);
+}
+#cycleName {
+	position:relative;
+	text-align:center;
+	font-size:24px;
+	width:200px;
+	margin:0 auto;
+}
+#cycleForward {
+	position:absolute;
+	right:0;
+	background-position: -180px -210px;
+}
+#cycleProgressBar {
+	margin:0 auto;
+	width:95%;
+	position:relative;
+	top:140px;
+}
