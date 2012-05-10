@@ -52,8 +52,11 @@ jQuery.fn.mousehold = function(timeout, f) {
 	}
 }
 
+// wrap ui code in a function
 function main () {
 	var washingMachine, washingMachineFast, cycle, updateTimer = null, state = "off";
+
+	// setup sound files for SoundManager
 	var setupSounds = function() {
 		washingMachine = soundManager.createSound({
 		id: 'washingMachine',
@@ -97,18 +100,20 @@ function main () {
 		});
 
 	}
-
+	// initialize SoundManager
 	soundManager.onready(function() {
 	  // Ready to use; soundManager.createSound() etc. can now be called.
 		setupSounds();
 	});
+
+	// show error message if SoundManager fails to load
 	soundManager.ontimeout(function(){
   		alert('Sounds failed to load');
 	});
 
-	// setup the stage
 	// hide controls in touchscreen
 	$('#touchScreen li').hide();
+
 	// setup buttons
 	$('li').addClass('circle');
 
@@ -117,15 +122,16 @@ function main () {
 
 	// setup power button event handler
 
-var powerHandler = function(state) {
-	if (state === "off") {
-		$('#powerControl').click(function() {
-			try {
-				startUp.play();
-			} 
-			catch(err) {
+	// wait until power button is pressed
+	var powerHandler = function(state) {
+		if (state === "off") {
+			$('#powerControl').click(function() {
+				try {
+					startUp.play();
+				} 
+				catch(err) {
 
-			}
+				}
 			$('#touchScreen').css('background-color', '#8FB2EB');
 			$('#touchScreen li').fadeIn();
 
@@ -138,6 +144,7 @@ var powerHandler = function(state) {
 			state = "on";
 			powerHandler(state);
 		});
+		// power down system if washer is already on
 	} else {
 		$('#powerControl').click(function() {
 			$('#touchScreen li,#touchScreen div, p').fadeOut();
@@ -148,11 +155,12 @@ var powerHandler = function(state) {
 		});
 	}
 }
-
 	powerHandler(state);
 
 	// setup touchscreen button event handlers
 		var setupPresetButtonHandlers = function() {
+
+			// go 1 cycle back if left arrow button is pressed
 			$('#cycleBack').click(function() {
 				try {
 					beep.play();
@@ -160,7 +168,7 @@ var powerHandler = function(state) {
 				catch(err) {
 
 				}
-
+				// save custom preset if changed
 				if (cycle.getName() === "Custom") {
 					var washTime = $('#setWashTime li.selected').attr('class').split(' ')[0];
 					var dryTime = $('#setDryTime li.selected').attr('class').split(' ')[0];
@@ -173,6 +181,8 @@ var powerHandler = function(state) {
 				initControls();
 				printTestInfo();
 			});
+
+			// go 1 cycle forward if right arrow button is pressed
 			$('#cycleForward').click(function() {
 				try {
 					beep.play();
@@ -195,6 +205,7 @@ var powerHandler = function(state) {
 		}
 		setupPresetButtonHandlers();
 
+	// set up buttons with data from Washer object
 	var initControls = function() {
 
 		// disable button highlights
@@ -225,6 +236,7 @@ var powerHandler = function(state) {
 		$('#cycleStop').addClass('selected');	
 	}
 
+	// toggles selected/unselected css class
 	var toggleButton = function(t) {
 		// disable highlighted buttons in list
 		$(t).siblings().removeClass('selected');
@@ -232,6 +244,8 @@ var powerHandler = function(state) {
 		// hightlight button pressed
 		$(t).addClass('selected');
 	}
+
+	// send data back up to Washer object upon button press
 	var buttonPress = function() { 
 		toggleButton(this);
 		try {
@@ -259,9 +273,13 @@ var powerHandler = function(state) {
 		
 		printTestInfo();
 	}
+
+	// setup event handlers for interface buttons
 	var initHandlers = function() {	
 		// setup physical button event handlers
 		$('#setWaterLevel li, #setWashTime li, #setDryTime li, #setWaterTemp li, #setWaterLevel li, #setDryTemp li').click(buttonPress);
+		
+		// when cycle start button is pressed
 		$('#cycleStart').click(function() {
 			toggleButton(this);
 			$('#setWaterLevel li, #setWashTime li, #setDryTime li, #setWaterTemp li, #setWaterLevel li, #setDryTemp li, #cycleChoice li').off('click');
@@ -279,6 +297,8 @@ var powerHandler = function(state) {
 			}
 
 			$('#washChoice').css('background-color', '#A32500'); 
+
+			// timer function
 			updateTimer = function() {
 				if (cycle.getStatus() === "stopped") {
 					try {
@@ -288,10 +308,11 @@ var powerHandler = function(state) {
 					} catch(err) {
 
 					}
-					
+					// stop timer
 					clearTimeout(updateTimer);
 					$('#cycleTimer').html("DONE");
 				} else {
+					// or continue
 					$('#cycleTimer').html("-" + ((cycle.getTimer().minutes < 10 ? '0' : '') + cycle.getTimer().minutes ) + ":" + ((cycle.getTimer().seconds < 10 ? '0' : '') + cycle.getTimer().seconds ));
 					var numSecondsLeft = (cycle.getTimer().minutes * 60) + cycle.getTimer().seconds;
 					var progress = (1 - (numSecondsLeft / ((cycle.getWashTime() + cycle.getDryTime()) * 60))) * 100;
