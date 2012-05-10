@@ -1,8 +1,4 @@
-/*   Washer/Dryer Prototype
-	 by Devon Blandin, April 2012
-	 for CSC 360, Spring Quarter 2012 */
-
-/**
+/*
  * jQuery mousehold plugin - fires an event while the mouse is clicked down.
  * Additionally, the function, when executed, is passed a single
  * argument representing the count of times the event has been fired during
@@ -51,6 +47,10 @@ jQuery.fn.mousehold = function(timeout, f) {
 		})
 	}
 }
+
+/*   Washer/Dryer Prototype
+	 by Devon Blandin, April 2012
+	 for CSC 360, Spring Quarter 2012 */
 
 // wrap ui code in a function
 function main () {
