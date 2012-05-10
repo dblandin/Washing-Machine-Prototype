@@ -328,6 +328,8 @@ function main () {
 			updateTimer();
 			printTestInfo();
 		});
+
+		// cycle pause
 		$('#cyclePause').click(function() {
 			washingMachine.pause();
 			toggleButton(this);
@@ -335,6 +337,8 @@ function main () {
 			cycle.pauseWash();
 			printTestInfo();
 		});
+
+		// cycle stop
 		$('#cycleStop').click(function() {
 			try {
 					washingMachine.stop();
@@ -414,6 +418,7 @@ function main () {
 	 		}
 	 	});
 	}
+	// print current status of Washer object
 	var printTestInfo = function() {
 		$('#testInfo').html('washTime : ' + cycle.getWashTime() + '<br />dryTime : ' + cycle.getDryTime() + '<br />waterTemp : ' + cycle.getWaterTemp() + '<br />waterLevel : ' + cycle.getWaterLevel() + '<br />dryTemp : ' + cycle.getDryTemp() + '<br />status : ' + cycle.getStatus());
 	}
