@@ -53,19 +53,18 @@ jQuery.fn.mousehold = function(timeout, f) {
 }
 
 function main () {
-var mySound;
-var state = "off";
+	var washingMachine, washingMachineFast, cycle, updateTimer = null, state = "off";
 	var setupSounds = function() {
-		mySound = soundManager.createSound({
-		id: 'aSound',
+		washingMachine = soundManager.createSound({
+		id: 'washingMachine',
 		url: 'sfx/washing-machine-1.mp3',
 		autoLoad: true,
 		stream: true
 		// onload: myOnloadHandler,
 		// other options here..
 		});
-		mySound2 = soundManager.createSound({
-		id: 'aSound2',
+		washingMachineFast = soundManager.createSound({
+		id: 'washingMachineFast',
 		url: 'sfx/washing-machine-1-fast.mp3',
 		autoLoad: true,
 		stream: true
@@ -106,9 +105,6 @@ var state = "off";
 	soundManager.ontimeout(function(){
   		alert('Sounds failed to load');
 	});
-	var cycle;
-
-	var updateTimer = null;
 
 	// setup the stage
 	// hide controls in touchscreen
@@ -271,10 +267,10 @@ var powerHandler = function(state) {
 			$('#setWaterLevel li, #setWashTime li, #setDryTime li, #setWaterTemp li, #setWaterLevel li, #setDryTemp li, #cycleChoice li').off('click');
 			cycle.startWash();
 			try {
-				if (mySound.pause === true) {
-					mySound.resume();
+				if (washingMachine.pause === true) {
+					washingMachine.resume();
 				} else { 
-					mySound.play({
+					washingMachine.play({
   					loops: 10
 					});
 				}
@@ -286,8 +282,8 @@ var powerHandler = function(state) {
 			updateTimer = function() {
 				if (cycle.getStatus() === "stopped") {
 					try {
-						mySound.stop();
-						mySound2.stop();
+						washingMachine.stop();
+						washingMachineFast.stop();
 						buzzer.play(1);
 					} catch(err) {
 
@@ -312,7 +308,7 @@ var powerHandler = function(state) {
 			printTestInfo();
 		});
 		$('#cyclePause').click(function() {
-			mySound.pause();
+			washingMachine.pause();
 			toggleButton(this);
 			clearTimeout(updateTimer);
 			cycle.pauseWash();
@@ -320,8 +316,8 @@ var powerHandler = function(state) {
 		});
 		$('#cycleStop').click(function() {
 			try {
-					mySound.stop();
-					mySound2.stop();
+					washingMachine.stop();
+					washingMachineFast.stop();
 				} catch(err) {
 				
 				}
@@ -344,8 +340,8 @@ var powerHandler = function(state) {
 		$('#fastForward').mousedown(function() {
 			if (cycle.getStatus() === 'running') {
 				try {
-						mySound.pause();
-						mySound2.play();
+						washingMachine.pause();
+						washingMachineFast.play();
 					} catch(err) {
 
 					}
@@ -354,8 +350,8 @@ var powerHandler = function(state) {
 		}).mouseup(function() {
 			if (cycle.getStatus() === 'running') {
 				try {
-					mySound2.stop();
-					mySound.play();
+					washingMachineFast.stop();
+					washingMachine.play();
 				} catch(err) {
 				
 				}
@@ -371,8 +367,8 @@ var powerHandler = function(state) {
 					} else {
 						cycle.stopWash();
 						try {
-							mySound.stop();
-							mySound2.stop();
+							washingMachine.stop();
+							washingMachineFast.stop();
 						} catch(err) {
 				
 						}

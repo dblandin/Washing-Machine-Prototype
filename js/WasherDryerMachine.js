@@ -1,6 +1,8 @@
 WashDryCycle = function() {
-	// setup data members
+	// setup cycle options
 	var id, name, washTime, dryTime, waterLevel, waterTemp, dryTemp, presets;
+	
+	// setup timer info
 	var status = "stopped";
 	var timeout = null;
 	var timer = {
@@ -11,9 +13,23 @@ WashDryCycle = function() {
 	    timer.minutes = washTime + dryTime;
 	    timer.seconds = 0;
 	}
+	var countdown = function() {
+    	if (timer.seconds === 0) {
+    		if (timer.minutes > 0) {
+				timer.minutes--;
+				timer.seconds = 59;
+			} else {
+				status = "stopped";
+				clearTimeout(timeout);
+			}
+		} else {
+			timer.seconds = --timer.seconds;
+		}
+		timeout = setTimeout(countdown, 1000);	
+	}
 
 	// setup presets
-	presets = [
+	var presets = [
 		{
 			name : "Custom",
 			washTime : 30,
@@ -39,66 +55,37 @@ WashDryCycle = function() {
 			dryTemp : "dryTempMedium",
 		}
 	]
-
 	// accessors
-	this.getName = function () {
-    	return name;
-	}
-	this.getWaterLevel = function () {
-	    return waterLevel;
-	}
-	this.getWaterTemp = function () {
-	    return waterTemp;
-	}
-	this.getDryTemp = function () {
-	    return dryTemp;
-	}
-	this.getWashTime = function () {
-	    return washTime;
-	}
-	this.getDryTime = function () {
-	    return dryTime;
-	}
-	this.getStatus = function () {
-	    return status;
-	}
-	this.getTimer = function () {
-	    return timer;
-	}
-	this.getPresets = function () {
-	    return presets;
-	}
+	WashDryCycle.prototype.getName = function () { return name; }
+	WashDryCycle.prototype.getWaterLevel = function () { return waterLevel; }
+	WashDryCycle.prototype.getWaterTemp = function () { return waterTemp; }
+	WashDryCycle.prototype.getDryTemp = function () { return dryTemp; }
+	WashDryCycle.prototype.getWashTime = function () { return washTime; }
+	WashDryCycle.prototype.getDryTime = function () { return dryTime; }
+	WashDryCycle.prototype.getStatus = function () { return status; }
+	WashDryCycle.prototype.getTimer = function () { return timer; }
+	WashDryCycle.prototype.getPresets = function () { return presets; }
 
 	// setters
-	this.setName = function (n) {
-	    name = n;
-	}
-	this.setWaterLevel = function (w) {
-	    waterLevel = w;
-	}
-	this.setWaterTemp = function (w) {
-	    waterTemp = w;
-	}
-	this.setDryTemp = function (d) {
-	    dryTemp = d;
-	}
-	this.setWashTime = function (w) {
-	    washTime = Number(w);
+	WashDryCycle.prototype.setName = function (n) { name = n; }
+	WashDryCycle.prototype.setWaterLevel = function (w) { waterLevel = w; }
+	WashDryCycle.prototype.setWaterTemp = function (w) { waterTemp = w; }
+	WashDryCycle.prototype.setDryTemp = function (d) { dryTemp = d; }
+	WashDryCycle.prototype.setWashTime = function (w) {
+	    washTime = +w;
 	    updateTimer();
 	}
-	this.setDryTime = function (d) {
-	    dryTime = Number(d);
+	WashDryCycle.prototype.setDryTime = function (d) {
+	    dryTime = +d;
 	    updateTimer();
 	}
-	this.setStatus = function (s) {
-	    status = s;
-	}
+	WashDryCycle.prototype.setStatus = function (s) { status = s; }
 
-	this.setTimer = function (m, s) {
+	WashDryCycle.prototype.setTimer = function (m, s) {
 	    timer.minutes = m;
 	    timer.seconds = s;
 	}
-	this.setPreset = function(preset, i) {
+	WashDryCycle.prototype.setPreset = function(preset, i) {
 		id = i; 
 		name = preset.name;
 		washTime = preset.washTime;
@@ -108,7 +95,7 @@ WashDryCycle = function() {
 		dryTemp = preset.dryTemp;
 		timer.minutes = washTime + dryTime;
 	}
-	this.setCustomPreset = function(washTimeIn, dryTimeIn, waterTempIn, waterLevelIn, dryTempIn) {
+	WashDryCycle.prototype.setCustomPreset = function(washTimeIn, dryTimeIn, waterTempIn, waterLevelIn, dryTempIn) {
 		presets[0] = {
 			name : "Custom",
 			washTime : Number(washTimeIn),
@@ -120,104 +107,34 @@ WashDryCycle = function() {
 	}
 
 // washer/dryer actions
-	var countdown = function() {
-    	if (timer.seconds === 0) {
-    		if (timer.minutes > 0) {
-				timer.minutes--;
-				timer.seconds = 59;
-			} else {
-				status = "stopped";
-				clearTimeout(timeout);
-			}
-		} else {
-			timer.seconds = --timer.seconds;
-		}
-		timeout = setTimeout(countdown, 1000);	
-	}
-	this.cycleForward = function() {
-		var i = (id + 1) % presets.length;
-		this.setPreset(presets[i], i);
-	}
-	this.cycleBack = function() {
-		if (id === 0) {
-			this.setPreset(presets[presets.length - 1], presets.length -1);
-		} else {
-			this.setPreset(presets[id - 1], id -1);
-		}
-	}
-	this.startWash = function() {
+	WashDryCycle.prototype.startWash = function() {
 		status = "running";
 		if (status === "stopped") {
 			timer.minutes = washTime + dryTime;
 		}
 		countdown();
 	}
-	this.pauseWash = function() {
+	WashDryCycle.prototype.pauseWash = function() {
 		status = "paused";
 		clearTimeout(timeout);
 	}
-	this.stopWash = function() {
+	WashDryCycle.prototype.stopWash = function() {
 		status = "stopped";
 		clearTimeout(timeout);
 		updateTimer();
 	}
+	WashDryCycle.prototype.cycleForward = function() {
+		var i = (id + 1) % presets.length;
+		this.setPreset(presets[i], i);
+	}
+	WashDryCycle.prototype.cycleBack = function() {
+		if (id === 0) {
+			this.setPreset(presets[presets.length - 1], presets.length -1);
+		} else {
+			this.setPreset(presets[id - 1], id -1);
+		}
+	}
 
 	// setup WashDryCycle object with custom preset
 	this.setPreset(presets[0], 0);
-}
-
-
-
-WashDryCycle.prototype.startWash = function () {
-	//$('#cycleStop').removeClass('selected');
-	//$('#cycleStart').addClass('selected');
-	//this.status = "running";
-	//this.countdown();
-	//this.seconds = this.washTime + this.dryTime;
-	
-}
-
-WashDryCycle.prototype.pauseWash = function () {
-    
-}
-
-WashDryCycle.prototype.stopWash = function () {
-	//this.status = "stopped";
-	//$('#cycleControls').removeClass('selected');
-	//$("#cycleProgressBar").progressbar({ value: 0 });
-    //clearTimeout(this.timeout);
-    //initControls();
-    //printTestInfo();
-    //$('#cycleStop').addClass('selected');
-    //this.timer.minutes = 0;
-    //this.timer.seconds = 0;
-}
-
-WashDryCycle.prototype.countdown = function () {
-    // countdown one second
-    // 
-    /*if (this.timer.seconds === 0) {
-    	console.log(this.timer.seconds + " = 0")
-    	if (this.timer.minutes > 0) {
-    		console.log(this.timer.minutes + " > 0")
-    		this.timer.minutes--;
-			this.timer.seconds = 59;
-			console.log(this.timer.minutes);
-			console.log(this.timer.seconds);
-		} else {
-			console.log("stop");
-			this.stopWash();
-		}
-	} else {
-		this.timer.seconds--;
-	}
-	*/
-		//this.seconds--;
-		//this.timeout = setTimeout(this.countdown, 1000);
-
-		//var numSecondsLeft = (this.timer.minutes * 60) + this.timer.seconds;
-		//var progress = (1 - (numSecondsLeft / ((this.washTime + this.dryTime) * 60))) * 100;
-
-		//$('#cycleProgressBar').progressbar({ value: progress });
-		//$('#cycleTimer').html("-" + this.timer.minutes + ":" + this.timer.seconds);
 }
