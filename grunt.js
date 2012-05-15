@@ -18,6 +18,10 @@ module.exports = function(grunt) {
       src: ['dist/all.js'],
       dest: 'dist/all.min.js'
     }
+  },
+  watch: {
+    files: ['js/*.js', 'libs/*.js', 'css/*.css'],
+    tasks: ['lint:all', 'concat:js', 'concat:css']
   }
 });
 };
