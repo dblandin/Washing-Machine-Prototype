@@ -34,23 +34,23 @@ jQuery.fn.mousehold = function(timeout, f) {
 					f.call(t, ctr);
 					fireStep = 2;
 				}, timeout);
-			})
+			});
 
 			clearMousehold = function() {
 				clearInterval(timer);
 				if (fireStep == 1) f.call(this, 1);
 				fireStep = 0;
-			}
+			};
 			
 			jQuery(this).mouseout(clearMousehold);
 			jQuery(this).mouseup(clearMousehold);
-		})
+		});
 	}
-}
+};
 
-/*   Washer/Dryer Prototype
-	 by Devon Blandin, April 2012
-	 for CSC 360, Spring Quarter 2012 */
+/*  Washer/Dryer Prototype
+    by Devon Blandin, April 2012
+    for CSC 360, Spring Quarter 2012 */
 
 // wrap ui code in a function
 function main () {
@@ -99,16 +99,16 @@ function main () {
 		// other options here..
 		});
 
-	}
+	};
 	// initialize SoundManager
 	soundManager.onready(function() {
-	  // Ready to use; soundManager.createSound() etc. can now be called.
+	// Ready to use; soundManager.createSound() etc. can now be called.
 		setupSounds();
 	});
 
 	// show error message if SoundManager fails to load
 	soundManager.ontimeout(function(){
-  		alert('Sounds failed to load');
+		alert('Sounds failed to load');
 	});
 
 	// hide controls in touchscreen
@@ -136,7 +136,7 @@ function main () {
 			$('#touchScreen li').fadeIn();
 
 			// initialize WashDryCycle object
-			cycle = new WashDryCycle;
+			cycle = new WashDryCycle();
 			// setup the controls
 			initControls();
 			initHandlers();
@@ -154,7 +154,7 @@ function main () {
 			powerHandler(state);
 		});
 	}
-}
+};
 	powerHandler(state);
 
 	// setup touchscreen button event handlers
@@ -172,9 +172,9 @@ function main () {
 				if (cycle.getName() === "Custom") {
 					var washTime = $('#setWashTime li.selected').attr('class').split(' ')[0];
 					var dryTime = $('#setDryTime li.selected').attr('class').split(' ')[0];
-					var waterTemp = $('#setWaterTemp li.selected').attr('id')
-					var waterLevel = $('#setWaterLevel li.selected').attr('id')
-					var dryTemp = $('#setDryTemp li.selected').attr('id')
+					var waterTemp = $('#setWaterTemp li.selected').attr('id');
+					var waterLevel = $('#setWaterLevel li.selected').attr('id');
+					var dryTemp = $('#setDryTemp li.selected').attr('id');
 					cycle.setCustomPreset(washTime, dryTime, waterTemp, waterLevel, dryTemp);
 				}
 				cycle.cycleBack();
@@ -193,16 +193,16 @@ function main () {
 				if (cycle.getName() === "Custom") {
 					var washTime = $('#setWashTime li.selected').attr('class').split(' ')[0];
 					var dryTime = $('#setDryTime li.selected').attr('class').split(' ')[0];
-					var waterTemp = $('#setWaterTemp li.selected').attr('id')
-					var waterLevel = $('#setWaterLevel li.selected').attr('id')
-					var dryTemp = $('#setDryTemp li.selected').attr('id')
+					var waterTemp = $('#setWaterTemp li.selected').attr('id');
+					var waterLevel = $('#setWaterLevel li.selected').attr('id');
+					var dryTemp = $('#setDryTemp li.selected').attr('id');
 					cycle.setCustomPreset(washTime, dryTime, waterTemp, waterLevel, dryTemp);
 				}
 				cycle.cycleForward();
 				initControls();
 				printTestInfo();
 			});
-		}
+		};
 		setupPresetButtonHandlers();
 
 	// set up buttons with data from Washer object
@@ -234,7 +234,7 @@ function main () {
 
 		// highlight stop button
 		$('#cycleStop').addClass('selected');	
-	}
+	};
 
 	// toggles selected/unselected css class
 	var toggleButton = function(t) {
@@ -243,7 +243,7 @@ function main () {
 
 		// hightlight button pressed
 		$(t).addClass('selected');
-	}
+	};
 
 	// send data back up to Washer object upon button press
 	var buttonPress = function() { 
@@ -272,7 +272,7 @@ function main () {
 		$('#cycleTimer').html("-" + cycle.getTimer().minutes + ":" + ((cycle.getTimer().seconds < 10 ? '0' : '') + cycle.getTimer().seconds ));
 		
 		printTestInfo();
-	}
+	};
 
 	// setup event handlers for interface buttons
 	var initHandlers = function() {	
@@ -289,7 +289,7 @@ function main () {
 					washingMachine.resume();
 				} else { 
 					washingMachine.play({
-  					loops: 10
+						loops: 10
 					});
 				}
 			} catch(err) {
@@ -323,7 +323,7 @@ function main () {
 					}
 					setTimeout(updateTimer, 1000);
 				}
-			}			
+			};
 
 			updateTimer();
 			printTestInfo();
@@ -382,12 +382,12 @@ function main () {
 				}
 			}
 		}).mousehold(10, function(i){ 
-			var minutesIn = cycle.getTimer().minutes, secondsIn = cycle.getTimer().seconds;
+			var minutesIn = cycle.getTimer().minutes, secondsIn = cycle.getTimer().seconds, m, s;
 			if (cycle.getStatus() === 'running') {
-		 		if (secondsIn <= 0) {
+				if (secondsIn <= 0) {
 					if (minutesIn > 0) {
-						var m = --minutesIn;
-						var s = 59;
+						m = --minutesIn;
+						s = 59;
 						cycle.setTimer(m, s);
 					} else {
 						cycle.stopWash();
@@ -410,18 +410,18 @@ function main () {
 
 					}
 				} else {
-					var m = minutesIn;
-					var s = secondsIn -= 2;
+					m = minutesIn;
+					s = secondsIn -= 2;
 					cycle.setTimer(m, s);
 				}
-		 		$('#cycleTimer').html("-" + ((cycle.getTimer().minutes < 10 ? '0' : '') + cycle.getTimer().minutes ) + ":" + ((cycle.getTimer().seconds < 10 ? '0' : '') + cycle.getTimer().seconds ));
-	 		}
-	 	});
-	}
+				$('#cycleTimer').html("-" + ((cycle.getTimer().minutes < 10 ? '0' : '') + cycle.getTimer().minutes ) + ":" + ((cycle.getTimer().seconds < 10 ? '0' : '') + cycle.getTimer().seconds ));
+			}
+		});
+	};
 	// print current status of Washer object
 	var printTestInfo = function() {
 		$('#testInfo').html('washTime : ' + cycle.getWashTime() + '<br />dryTime : ' + cycle.getDryTime() + '<br />waterTemp : ' + cycle.getWaterTemp() + '<br />waterLevel : ' + cycle.getWaterLevel() + '<br />dryTemp : ' + cycle.getDryTemp() + '<br />status : ' + cycle.getStatus());
-	}
+	};
 }
 
 $(main);

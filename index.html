@@ -1,22 +1,20 @@
 <!doctype html>
 <html>
 
-<!-- Washer/Dryer Prototype
-	 by Devon Blandin, April 2012
-	 for CSC 360, Spring Quarter 2012      -->
+<!-- 
+Washer/Dryer Prototype
+by Devon Blandin, April 2012
+for CSC 360, Spring Quarter 2012
+-->
 
 <head>
 	<meta charset="utf-8">
 	<title>Washer/Dryer Prototype</title>
-	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-	<script>window.jQuery || document.write('<script src="js/jquery-1.7.1.min.js"><\/script><script src="js/jquery-ui.min.js"><\/script><link href="css/jquery-ui.css" rel="stylesheet" type="text/css"/>')</script>
-	<script src="js/WasherDryerMachine.js"></script>
-	<script src="js/main.js"></script>
-	<script src="js/soundmanager2.js"></script>
-	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-	<link rel="stylesheet" href="css/styles.css" />
+	<script>window.jQuery || document.write('<script src="fallback/jquery-1.7.1.min.js"><\/script><script src="fallback/jquery-ui.min.js"><\/script><link href="css/jquery-ui.css" rel="stylesheet" type="text/css"/>')</script>
+	<script src="dist/all.js"></script>
+	<link rel="stylesheet" href="dist/all.css" />
 </head>
 <body>
 	<section id="interface">
@@ -86,6 +84,5 @@
 	soundManager.flashVersion = 9;
 	soundManager.useFlashBlock = false;
 </script>
-
 </body>
 </html>
