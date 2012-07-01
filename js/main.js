@@ -54,6 +54,31 @@ jQuery.fn.mousehold = function(timeout, f) {
 
 // wrap ui code in a function
 function main () {
+
+	function divide(a,b) {
+		return a / b;
+	}  
+
+	var executeUnitTests = function() {
+		module("Basic WasherDryerMachine Test");  
+		test("Test Object Setup", function() {
+			expect(7);
+			var cycle = new WashDryCycle();
+			equal(cycle.getName(), "Custom", 'Expected "Custom" as the result, result was: ' + cycle.getName());
+			equal(cycle.getWaterLevel(), "waterLevelHigh", 'Expected "waterLevelHigh" as the result, result was: ' + cycle.getWaterLevel());
+			equal(cycle.getDryTime(), 30, 'Expected 30 as the result, result was: ' + cycle.getDryTime());
+			equal(cycle.getWashTime(), 30, 'Expected 30 as the result, result was: ' + cycle.getWashTime());
+			equal(cycle.getDryTemp(), "dryTempHigh", 'Expected "dryTempHigh" as the result, result was: ' + cycle.getDryTemp());
+			equal(cycle.getWaterTemp(), "waterTempCold", 'Expected "dryTempHigh" as the result, result was: ' + cycle.getWaterTemp());
+			deepEqual(cycle.getTimer(), { minutes : (cycle.getDryTime() + cycle.getWashTime()), seconds : 0 }, 'Expected { minutes : 0, seconds : 0 } as the result, result was: ' + JSON.stringify(cycle.getTimer()));
+		}); 
+
+		QUnit.log = function(result, actual, expected, message) {  
+				console.log(actual +' :: '+ expected);
+		};
+	}();
+
+
 	var washingMachine, washingMachineFast, cycle, updateTimer = null, state = "off";
 
 	// setup sound files for SoundManager

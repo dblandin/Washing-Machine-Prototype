@@ -28,12 +28,16 @@ WashDryCycle = function() {
 		timeout = setTimeout(countdown, 1000);	
 	};
 
+var test = function() {
+	console.log("Hello!");
+}();
+
 	// setup presets
 	presets = [
 		{
 			name : "Custom",
 			washTime : 30,
-			dryTime : 30,
+			dryTime : 45,
 			waterTemp : "waterTempCold",
 			waterLevel : "waterLevelHigh",
 			dryTemp : "dryTempHigh"
